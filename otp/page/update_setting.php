@@ -6,7 +6,7 @@ require_once "../php/const.php";
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h1 class="page-title txt-color-blueDark">
             <i class="fa fa-pencil-square-o fa-fw "></i>
-            Update Parser
+            Update Setting
                             <span>
                             </span>
         </h1>
@@ -23,7 +23,7 @@ require_once "../php/const.php";
         <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-latest" data-widget-editbutton="false" data-widget-deletebutton="false">
             <header>
                 <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                <h2 id="titleCategory">Update Parser</h2>
+                <h2 id="titleCategory">Update Setting</h2>
             </header>
             <!-- widget div-->
             <div>
@@ -77,7 +77,7 @@ require_once "../php/const.php";
                                             <button class="btn btn-default" type="submit" onclick="clearForm()">
                                                 Cancel
                                             </button>
-                                            <button class="btn btn-primary" type="submit" onclick="uploadParser()">
+                                            <button class="btn btn-primary" type="submit" onclick="uploadScript()">
                                                 <i class="fa fa-save"></i>
                                                 Submit
                                             </button>
@@ -164,12 +164,12 @@ require_once "../php/const.php";
 
             if(typeof arr === 'undefined')  alertFail("script tidak boleh kosong!");
             else{
+                console.log(arr);
                 for(var k in arr){
                     labels += `<option>${arr[k].name}</option>`;
-                    wa += `<option>${arr[k].wa}</option>`;
-                    sms += `<option>${arr[k].sms}</option>`;
                 }
                 $("#label").html(labels);
+                // $("#wa").prop("checked", true);
             }
 
         });
@@ -211,75 +211,80 @@ require_once "../php/const.php";
             type: "GET",
             url: url
         }).done(function(data) {
-            var setting = data;
-            console.log(setting);
-            $("#setting").val(setting);
-
+            var ress = JSON.parse(data);
+            console.log(ress);
+            $("#setting").val(ress.script);
+            if(ress.wa == 1){
+                $("#wa").prop("checked", true);
+            }else{
+                $("#wa").prop("checked", false);
+            }
+            console.log(ress.sms);
+            if(ress.sms == 1){
+                $("#sms").prop("checked", true);
+            }else{
+                $("#sms").prop("checked", false);
+            }
         });
     }
 
     function clearForm(){
-        $("#title").val("");
-        $("#poster").val("");
-        $("#titles_id").val("");
-        $("#media_type").val("");
-        $("#release_date").val("");
-        $("#season").val("");
-        $("#episode").val("");
-        $("#url").val("");
-        $("#sumber").val("");
         $("#label").val("");
-        $("#vtype").val("");
+        $("#script").val("");
+        $("#base64script").val("");
+        $("#wa").val("");
+        $("#sms").val("");
     }
     
-    function uploadParser() {
-        var label = $("#label").val(),
-            parser = $("#filename").val(),
+    function uploadScript() {
+        var api_key = $("#api_key").val(),
+            name = $("#label").val(),
             script = $("#base64script").val(),
-            url =  `${apibaseurl}video_label/parser/change?api_key=${api_key}&session_id=${session_id}`;
+            wa = document.getElementById("wa"),
+            sms = document.getElementById("sms");
+
+            if (wa.checked == true){
+                wa = "1";
+            }else{
+                wa = "0";
+            }
+            if (sms.checked == true){
+                sms = "1";
+            }else{
+                sms = "0";
+            }
+
         console.log($("#script").val());
         if($("#script") == ""){
             alertFail("script tidak boleh kosong!");
             return;
         }
-        if(parser == "" || parser == null){
+        if(name == "" || name == null){
             alertFail("filename tidak boleh kosong!");
             return;
         }
-        
-        var post = {
-            code : 14,
-            data : {
-                name : label,
-                parser : parser,
-                script : script
-            }
-        };
-//        console.log(post);
-        console.log(url);
+        var url =  `${apibaseurl}smsbot_v2/update_setting.php?api_key=${api_key}&nama=${name}&script=${script}&wa=${wa}&sms=${sms}`;
+
         $.confirm({
             title: 'Confirm',
             icon: 'fa fa-exclamation-triangle',
             type: 'orange',
-            content: "Pastikan parser yang diinput sudah benar!",
+            content: "Pastikan data yang diinput sudah benar!",
             buttons: {
                 Ya: function () {
-                    console.log(post);
                     $.ajax({
-                        type: "POST",
-                        url: "php/inflixer/api.php",
-                        contentType: "application/json; charset=utf-8",
-                        data: JSON.stringify(post),
-                        dataType: "json",
+                        type: "GET",
+                        url: url
                     }).done(function(data) {
                         console.log(data);
                         var res = data;
-                        if(res.bytes_written>0){
-                            alertSuccess(res.msg||'parser berhasil diupload '+ JSON.stringify(data));
+                        console.log(res["m"]);
+                        if(res["m"] = "Ok"){
+                            alertSuccess('Setting berhasil diupload');
+                            clearForm();
                         }else{
                             alertFail('error' + JSON.stringify(data));
                         }
-                        clearForm();
                     });
                 },
                 cancel: function () {

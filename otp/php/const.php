@@ -29,9 +29,9 @@ define("INF_API_URL_HTTP", "http://localhost/otp/");
 //define("DB_CRAWLER_USERNAME", "robo");
 //define("DB_CRAWLER_PASS", "234hrk345g883jdy7");
 //
-define("DB_CRAWLER", "dev_robov6");
-define("DB_CRAWLER_USERNAME", "dev");
-define("DB_CRAWLER_PASS", "devbemobile04");
+define("DB_CRAWLER", "dev_smsbot");
+define("DB_CRAWLER_USERNAME", "root");
+define("DB_CRAWLER_PASS", "");
 
 //LOCAL
 //define("DB_CRAWLER", "dev_robov5");
@@ -47,7 +47,7 @@ define("TABLE_CRAWL_ANIME_EPISODE", "c_gdrive_anime_tv_episode");
 define("TMDB_API_KEY", "55545b0573918d0261261e2a7489eec2");
 //define("INF_KEY", "2y10WOaEbnfSTnJ9NVUsDw5uKufDxsngv1QPREZaQt2f7vfrzhgEBbcZe");
 define("INF_KEY", "2y10ZeA82P0VHPkwoRsv8soQeuBhjeJVHT2LjbymQqCFty8rJqFsz2y");
-define("SESSION_ID", "2f1060f1438aa1bd9cc0f550fd4f3c12cb210c82");
+// define("SESSION_ID", "2f1060f1438aa1bd9cc0f550fd4f3c12cb210c82");
 
 define("INF_SEARCH_URL",    INF_URL . "typeahead/");
 define("INF_FILM_URL",      INF_URL . "film/");
@@ -78,9 +78,9 @@ define("INF_VIDEOLABEL_ORDER", INF_API_URL."video_label?api_key=".INF_KEY."&sess
 define("INF_CREATE_REQUEST_TOKEN", INF_API_URL."authentication/token/new?api_key=".INF_KEY);
 define("INF_VALIDATE_WITH_LOGIN", INF_API_URL."authentication/token/validate_with_login?api_key=".INF_KEY);
 define("INF_VALIDATE_WITH_GOOGLE", INF_API_URL."authentication/token/validate_with_google?api_key=".INF_KEY);
-define("INF_VERIFY", INF_API_URL."account/verify?api_key=".INF_KEY);
-define("INF_ACCOUNT", INF_API_URL."account?api_key=".INF_KEY."&session_id=".$_SESSION['session_id']);
-define("INF_ACCOUNT_STORY", INF_API_URL."account/story?api_key=".INF_KEY."&session_id=".$_SESSION['session_id']);
+define("INF_VERIFY", INF_API_URL."login/account/verify?api_key=".INF_KEY);
+define("INF_ACCOUNT", INF_API_URL."login/account?api_key=".INF_KEY."&session_id=".$_SESSION['session_id']);
+define("INF_ACCOUNT_STORY", INF_API_URL."login/account/story?api_key=".INF_KEY."&session_id=".$_SESSION['session_id']);
 
 //API INF TMDB
 define("INF_ADD_MOVIE_TMDB",    INF_API_URL . "info/movie/tmdb?api_key=".INF_KEY."&session_id=".$_SESSION['session_id']);

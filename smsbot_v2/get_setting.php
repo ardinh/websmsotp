@@ -33,13 +33,11 @@ $idss = array();
 for ($i = 0; $i < count($rows); $i++) {
     $row = $rows[$i];
     $ids['name'] = $row[0];
-    $ids['wa'] = $row[1];
-    $ids['sms'] = $row[2];
     $idss['setting'][] = $ids;
 }
 
 // print_r($rows);
-print_r(json_encode($idss));
+echo json_encode($idss);
 
 die();
 finish:

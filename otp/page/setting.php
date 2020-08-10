@@ -7,8 +7,8 @@ require_once "../php/const.php";
         <h1 class="page-title txt-color-blueDark">
             <i class="fa fa-pencil-square-o fa-fw "></i>
             Add Setting
-							<span>
-							</span>
+			<span>
+			</span>
         </h1>
     </div>
     <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
@@ -122,7 +122,11 @@ require_once "../php/const.php";
                             <div class="col-md-9 col-sm-10">
 
                                 <div class="form-group">
-                                    <textarea name="setting" id="setting" readonly class="form-control" cols="30" rows="50"></textarea>
+                                    <textarea name="setting" id="setting" readonly class="form-control" cols="30" rows="50">
+                                        Script harus memanggil variable content ($content) sebagai string.
+                                        Contoh :
+                                        $string = $content;
+                                    </textarea>
                                 </div>
 
                             </div>
@@ -278,6 +282,7 @@ require_once "../php/const.php";
                         console.log(res["m"]);
                         if(res["m"] = "Ok"){
                             alertSuccess('Setting berhasil diupload ');
+                            clearForm();
                         }else{
                             alertFail('error' + JSON.stringify(data));
                         }

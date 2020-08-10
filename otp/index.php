@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])){
+//	echo  "asdkhkjsa";
+//	die();
+	header("Location:login.php");
+	//header("Location:http://devel.motion.co.id/crawling_bioskopkeren/login.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en-us">	
 	<head>
@@ -23,6 +32,8 @@
 		<!--<link rel="stylesheet" type="text/css" media="screen" href="../Source_UNMINIFIED_CSS/smartadmin-skins.css">-->
 
 		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-confirm.min.css">
+
+		<link rel="stylesheet" type="text/css" media="screen" href="css/movie.css">
 		<!-- We recommend you use "your_style.css" to override SmartAdmin
 		     specific styles this will also ensure you retrain your customization with each SmartAdmin update.
 		<link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
@@ -98,7 +109,9 @@
 		<header id="header">
 			<div id="logo-group">
 
+				<!-- PLACE YOUR LOGO HERE -->
 				<span id="logo"> <img src="img/logo.png" alt="SmartAdmin"> </span>
+				<!-- END LOGO PLACEHOLDER -->
 				
 			</div>
 			
@@ -114,9 +127,9 @@
 				<!-- end collapse menu -->
 
 				<!-- logout button -->
-				<!-- <div id="logout" class="btn-header transparent pull-right">
+				<div id="logout" class="btn-header transparent pull-right">
 					<span> <a href="login.html" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
-				</div> -->
+				</div>
 				<!-- end logout button -->
 				
 
@@ -127,10 +140,10 @@
 				<!-- end fullscreen button -->
 				<div class="header-search pull-right">
 					<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-					<!-- <input id="search-fld" type="text" style="width: 350px;" name="param" placeholder="Cari Film/Seri" class="ui-autocomplete-input" autocomplete="off">
+					<input id="search-fld" type="text" style="width: 350px;" name="param" placeholder="Cari Film/Seri" class="ui-autocomplete-input" autocomplete="off">
 					<button type="submit">
 						<i class="fa fa-search"></i>
-					</button> -->
+					</button>
 					<ul class="list-group search-res" id="search-res" style="">
 						
 					</ul>
@@ -152,9 +165,9 @@
 					
 					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
 						<img src="img/avatars/male.png" alt="me" class="online" /> 
-						<!-- <span>
+						<span>
 							<?= $_SESSION['username']?>
-						</span> -->
+						</span>
 					</a> 
 					
 				</span>
@@ -250,7 +263,7 @@
 		</script>
 		<script src="js/func.js"></script>
 		<script src="js/funcDramaqu.js"></script>
-		<script src="js/funcJF.js"></script>
+        <script src="js/funcUniversal.js"></script>
 		<!-- IMPORTANT: APP CONFIG -->
 		<script src="js/app.config.js"></script>
 
@@ -265,7 +278,7 @@
 
 		<!-- JQUERY VALIDATE -->
 		<script src="js/plugin/jquery-validate/jquery.validate.min.js"></script>
-
+		<script src="js/plugin/jquery-nestable/jquery.nestable.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
 		<!--[if IE 8]>
 			<h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
@@ -294,8 +307,7 @@
 				var q = $(this).val();
 				var html = "";
 
-				// $.get("http://dev.motion.co.id/robo/v4/cpanel/php/
-				$.get("http://localhost/robo/v4/cpanel/php/typeahead.php?q="+q,function( data ) {
+				$.get("http://dev.motion.co.id/robo/v4/cpanel/php/typeahead.php?q="+q,function( data ) {
 					for(k in data){
 						var title = data[k].rawtitle;
 						var movurl = data[k].moviepageurl;

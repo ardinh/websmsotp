@@ -14,8 +14,10 @@ $nama = $_GET['nama'];
 $script = $_GET['script'];
 $wa = $_GET['wa'];
 $sms = $_GET['sms'];
-
-
+$var = "";
+if($script !== ""){
+	$var = "setting='$script',";
+}
 
 $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($mysqli->connect_errno) {
@@ -23,7 +25,8 @@ if ($mysqli->connect_errno) {
     goto finish;
 }
 
-$query = "UPDATE content_setting SET nama_setting=$nama, setting=$script, whatsapp=$wa, sms=$sms WHERE api_key = $api_key";
+$query = "UPDATE content_setting SET $var whatsapp=$wa, sms=$sms WHERE api_key = '$api_key' and nama_setting = '$nama'";
+echo $query;
 $stmt = $mysqli->prepare($query);
 if ($stmt === false) {
     $reply = replyErrorDatabasePrepare();

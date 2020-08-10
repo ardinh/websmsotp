@@ -13,7 +13,7 @@ if ($mysqli->connect_errno) {
     goto finish;
 }
 
-$query = "SELECT setting FROM content_setting where api_key = '$api_key' and nama_setting = '$name'";
+$query = "SELECT setting, whatsapp, sms FROM content_setting where api_key = '$api_key' and nama_setting = '$name'";
 $stmt = $mysqli->prepare($query);
 if ($stmt === false) {
     goto finish;
@@ -31,13 +31,11 @@ if ($result === false) {
 $ids = array();
 $rows = $result->fetch_all(MYSQLI_NUM);
 
-for ($i = 0; $i < count($rows); $i++) {
-    $row = $rows[$i];
-    $ids[] = base64_decode($row[0]);
-}
+$ids['script'] = base64_decode($rows[0][0]);
+$ids['wa'] = $rows[0][1];
+$ids['sms'] = $rows[0][2];
 
-
-echo base64_decode($rows[0][0]);
+echo json_encode($ids);
 
 die();
 finish:
