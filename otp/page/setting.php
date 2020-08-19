@@ -23,7 +23,7 @@ require_once "../php/const.php";
         <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-latest" data-widget-editbutton="false" data-widget-deletebutton="false">
             <header>
                 <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                <h2 id="titleCategory">Update Parser</h2>
+                <h2 id="titleCategory">Add Setting</h2>
             </header>
             <!-- widget div-->
             <div>
@@ -148,7 +148,7 @@ require_once "../php/const.php";
 <!-- end widget grid -->
 
 <script type="text/javascript">
-    var api_key = "<?= INF_KEY?>",
+    var api_key = "<?= $_SESSION['key']?>",
         session_id = "<?= $_SESSION['session_id']?>",
         apibaseurl = "<?= INF_URL?>",
         parser=[];

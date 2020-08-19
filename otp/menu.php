@@ -1,15 +1,18 @@
 <?php
 $sms = '<li class="top-menu-invisible ">
-		<a href="page/dashboard.php"><i class="fa fa-lg fa-fw fa-phone txt-color-blue"></i> <span class="menu-item-parent">OTP</span></a>
+		<a href="page/setting.php"><i class="fa fa-lg fa-fw fa-phone txt-color-blue"></i> <span class="menu-item-parent">OTP</span></a>
 		<ul style="display: block;">
 		    <li>
-		    	<a href="page/setting.php"><i class="fa fa-film"></i>Add Content Setting</a>
+		    	<a href="page/setting.php"><i class="fa fa-lg fa-fw fa-phone"></i>Add Content Setting</a>
 		    </li>
             <li>
-                <a href="page/update_setting.php"><i class="fa fa-film"></i>Update Content Setting</a>
+                <a href="page/update_setting.php"><i class="fa fa-lg fa-fw fa-phone"></i>Update Content Setting</a>
             </li>
 		</ul>
 	</li>';
+$wa =   '<li>
+                <a href="page/sms.php"><i class="fa fa-lg fa-fw fa-phone"></i>Whatsapp</a>
+        </li>';
 ?>
 
 
@@ -17,9 +20,14 @@ $sms = '<li class="top-menu-invisible ">
     <?php
         switch ($_SESSION['level']){
             case 0:
+                echo $wa;
+                break;
+            case 10:
+                echo $wa;
                 echo $sms;
                 break;
             case 100:
+                echo $wa;
                 echo $sms;
                 break;
         }

@@ -12,6 +12,7 @@ define('API_SMS_KUOTA_STAT', 8);
 define('API_SMS_KUOTA_CEK', 9);
 define('API_SMS_DVC_UPDATE', 10);
 define('API_ADD_SET', 11);
+define('API_ADD_OP', 12);
 
 function isMethodPost() {
     return $_SERVER['REQUEST_METHOD'] === 'POST';

@@ -15,7 +15,7 @@ date_default_timezone_set('Asia/Jakarta');
 $balance = getBalance();
 if($balance['value'] <= 1){
     $m = "Saldo Nexmo API sisa €".$balance['value']." silahkan top up saldo Nexmo agar API send SMS No Malaysia bisa di jalankan";
-    sendMessage($m);
+    // sendMessage($m);
 }
 $balance = array(1100, 'Your Balance Value is €'.str_replace(".", ",", $balance['value']), '€'.str_replace(".", ",", $balance['value']), date("Y-m-d H:i:s"));
 // print_r(json_encode($balance));

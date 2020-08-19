@@ -29,38 +29,71 @@ if (
     goto finish;
 }
 
-
+$devid = $json[PAYLOAD_DEVICE_ID];
 $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($mysqli->connect_errno) {
     $reply = replyErrorDatabaseConnect();
     goto finish;
 }
 
-$devid = $json[PAYLOAD_DEVICE_ID];
-$nope = array('817','818','819','859','877','878','895','896','897','898','899','838','831','832','833','814','815','816','855','856','857','858');
-$no = array('817','818','819','859','877','878','838','831','832','833');
-$no3 = array('895','896','897','898','899');
-$noind = array('814','815','816','855','856','857','858');
-$table = TABLE_SMS_QUEUE;
-$status = STATUS_BEGIN;
-// $query = "SELECT id, msisdn, content FROM `$table` ORDER BY id desc LIMIT 10";
-$noo = '';
-if ($devid == 5 || $devid == 6) {
+$query = "SELECT operator FROM `sms_dvc_3` WHERE devid=$devid";
+// echo $query;
+$stmt = $mysqli->prepare($query);
+if ($stmt === false) {
+    $reply = replyErrorDatabasePrepare();
+    goto finish;
+}
+
+if ($stmt->execute() === FALSE) {
+    $reply = replyErrorDatabaseExecute();
+    goto finish;
+}
+
+$result = $stmt->get_result();
+if ($result === false) {
+    $reply = replyErrorDatabaseResult();
+    goto finish;
+}
+$no = array();
+$row = array();
+$rows = $result->fetch_all(MYSQLI_NUM);
+$q = "";
+if($rows[0][0] != ""){
+    $row = explode(",", $rows[0][0]);
+
+    for ($i=0; $i < count($row); $i++) { 
+        $query = "SELECT nomor FROM `sms_operator` WHERE id_operator=$row[$i]";
+
+        $stmt = $mysqli->prepare($query);
+        if ($stmt === false) {
+            $reply = replyErrorDatabasePrepare();
+            goto finish;
+        }
+
+        if ($stmt->execute() === FALSE) {
+            $reply = replyErrorDatabaseExecute();
+            goto finish;
+        }
+
+        $result = $stmt->get_result();
+        if ($result === false) {
+            $reply = replyErrorDatabaseResult();
+            goto finish;
+        }
+
+        $rows = $result->fetch_all(MYSQLI_NUM);
+        $no = array_merge($no,explode(",",$rows[0][0]));
+    }
     $noo = join(',',$no);
-    $query = "SELECT id, msisdn, content FROM `sms_queue` WHERE status=$status AND ISNULL(devid) and SUBSTRING(msisdn, 3, 3) in ($noo) and DATE_ADD(insert_time,INTERVAL 2 MINUTE) > now() ORDER BY id ASC LIMIT 10";
-}/*else if ($devid == 4) {
-    $noo = join(',',$noind);
-    $query = "SELECT id, msisdn, content FROM `sms_queue` WHERE status=$status AND ISNULL(devid) and SUBSTRING(msisdn, 3, 3) in ($noo) ORDER BY id ASC LIMIT 10";
-}*/else if ($devid == 3 || $devid == 4 || $devid == 7 || $devid == 8 || $devid == 9 || $devid == 10 || $devid == 11) {
-    $noo = join(',',$noind);
-    $query = "SELECT id, msisdn, content FROM `sms_queue` WHERE status=$status AND ISNULL(devid) and SUBSTRING(msisdn, 3, 3) in ($noo) and DATE_ADD(insert_time,INTERVAL 2 MINUTE) > now() ORDER BY id ASC LIMIT 10";
-    // $query = "SELECT id, msisdn, content FROM `sms_queue` WHERE status=$status AND ISNULL(devid) and SUBSTRING(msisdn, 3, 3) in ($noo) ORDER BY id ASC LIMIT 10";
-}else{
-    $noo = join(',',$nope);
-    $query = "SELECT id, msisdn, content FROM `sms_queue` WHERE status=$status AND ISNULL(devid) and SUBSTRING(msisdn, 3, 3) not in ($noo) and DATE_ADD(insert_time,INTERVAL 2 MINUTE) > now() ORDER BY id ASC LIMIT 10";
+    $q = " and SUBSTRING(msisdn, 3, 3) in ($noo)";
 }
 
 
+$table = TABLE_SMS_QUEUE;
+$status = STATUS_BEGIN;
+$query = "SELECT id, msisdn, content FROM `sms_queue` WHERE status=$status AND ISNULL(devid)$q and DATE_ADD(insert_time,INTERVAL 2 MINUTE) > now() ORDER BY id ASC LIMIT 10";
+
+echo $query;
 $stmt = $mysqli->prepare($query);
 if ($stmt === false) {
     $reply = replyErrorDatabasePrepare();

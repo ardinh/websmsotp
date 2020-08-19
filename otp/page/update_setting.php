@@ -147,7 +147,7 @@ require_once "../php/const.php";
 <!-- end widget grid -->
 
 <script type="text/javascript">
-    var api_key = "<?= INF_KEY?>",
+    var api_key = "<?= $_SESSION['key']?>",
         session_id = "<?= $_SESSION['session_id']?>",
         apibaseurl = "<?= INF_URL?>",
         parser=[];
@@ -160,7 +160,7 @@ require_once "../php/const.php";
         }).done(function(data) {
             var res = JSON.parse(data),
                 labels = "",
-                arr = res.setting;
+                arr = res;
 
             if(typeof arr === 'undefined')  alertFail("script tidak boleh kosong!");
             else{

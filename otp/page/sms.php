@@ -88,11 +88,12 @@ define("UPDATE_DVC", SMS_BASEURL . "update_dvc.php");
                 <form class="form-horizontal">
 
                     <fieldset>
-                        <legend>Nomor Cek Kuota</legend>
+                        <legend>Operator Tujuan</legend>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">Nomor</label>
                             <div class="col-md-10">
-                                <input class="form-control" placeholder="" type="text" id="nomorkuota">
+                                <input type="checkbox" id="xl" name="xl"><label for="xl"> XL </label> <input type="checkbox" id="tsel" name="tsel"><label for="tsel"> Telkomsel </label>
+                                <input type="checkbox" id="tri" name="tri"><label for="tri"> TRI </label> <input type="checkbox" id="ind" name="ind"><label for="ind"> Indosat </label>
+                                <input type="checkbox" id="smartfren" name="smartfren"><label for="smartfren"> Smartfren </label>
                             </div>
                         </div>
 
@@ -123,7 +124,7 @@ define("UPDATE_DVC", SMS_BASEURL . "update_dvc.php");
     var smskuota = "<?= SMS_KUOTA ?>",
             checkkuota = "<?= CHECK_KUOTA ?>",
             updatedvc = "<?= UPDATE_DVC ?>",
-            jml_device = 3;
+            jml_device = 2;
     
     for (var i = 1; i <= jml_device; i++) {
         var clas = ``;

@@ -8,10 +8,10 @@ if($_POST){
     if(mysqli_num_rows($login)==1){
         $data = mysqli_fetch_assoc($login);
         $_SESSION['username'] = $_POST['username'];
-        $_SESSION['key'] = $data['key'];
+        $_SESSION['key'] = $data['api_key'];
         $_SESSION['level'] = $data['level'];
-        //print_r($_SESSION);
-        //die();
+        // print_r($_SESSION);
+        // die();
         header("Location: index.php");
     }
 }

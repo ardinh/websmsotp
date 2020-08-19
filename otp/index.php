@@ -3,6 +3,7 @@ session_start();
 if (!isset($_SESSION['username'])){
 //	echo  "asdkhkjsa";
 //	die();
+	// echo $_SESSION['key'];
 	header("Location:login.php");
 	//header("Location:http://devel.motion.co.id/crawling_bioskopkeren/login.php");
 }

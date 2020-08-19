@@ -12,9 +12,10 @@ if($_POST){
     $pass = md5($_POST['password']);
     $email = $_POST['email'];
     $url = "http://localhost/smsbot_v2/register.php?f=$first&l=$last&u=$user&p=$pass&e=$email";
-    echo $url;
+    // echo $url;
     $res = getContent($url,"GET"); 
-    print_r($res);
+    header("Location: login.php");
+    // print_r($res);
 }
    
     // $rd = json_decode($res);
